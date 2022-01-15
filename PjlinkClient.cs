@@ -4,7 +4,6 @@ using System.Text;
 using System.Threading;
 using System.Net.Sockets;
 using System.IO;
-using PjlinkClient.Properties;
 
 namespace PjlinkClient
 {
@@ -15,19 +14,22 @@ namespace PjlinkClient
 	{
 		private readonly string hostName = "";
 		private readonly int port = 4352;
+		private int tcpConnectionTimeOut = 2000;
 
 		/// <summary>
 		/// Create a new instance of the client class. It connects to the projector with authentication.
 		/// </summary>
-		public PjlinkClient(string hostName, int port)
+		public PjlinkClient(string hostName, int port, int tcpConnectionTimeOut = 2000)
 		{
 			this.hostName = hostName;
 			this.port = port;
+			this.tcpConnectionTimeOut = tcpConnectionTimeOut;
 		}
 
-		public PjlinkClient(string hostName)
+		public PjlinkClient(string hostName, int tcpConnectionTimeOut = 2000)
 		{
 			this.hostName = hostName;
+			this.tcpConnectionTimeOut = tcpConnectionTimeOut;
 		}
 
         private CommandResponse SendCommand(Commands command)
@@ -43,15 +45,11 @@ namespace PjlinkClient
 				tcpClient.ReceiveBufferSize = 300;
 				tcpClient.BeginConnect(hostName, port, null, null);
 
-				int timeOut = 2000;
-				if (Settings.Default.TcpConnectionTimeOut > 0)
-					timeOut = Settings.Default.TcpConnectionTimeOut;
-
 				DateTime start = DateTime.UtcNow;
 				while (!tcpClient.Connected)
 				{
 					TimeSpan elapsed = new TimeSpan(DateTime.UtcNow.Ticks - start.Ticks);
-					if (elapsed.TotalMilliseconds > timeOut)
+					if (elapsed.TotalMilliseconds > tcpConnectionTimeOut)
 						throw new ProjectorConnectionException("Connection timed out.");
                     Thread.Sleep(500);
 				}
