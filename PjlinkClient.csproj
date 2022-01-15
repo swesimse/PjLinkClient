@@ -13,17 +13,19 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
+    <Version>2.0.0</Version>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <CodeAnalysisRuleSet>
     </CodeAnalysisRuleSet>
-    <PackageLicenseExpression>GNU General Public License v3.0</PackageLicenseExpression>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/swesimse/PjLinkClient</PackageProjectUrl>
     <RepositoryUrl>https://github.com/swesimse/PjLinkClient</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\x86\Debug\</OutputPath>
