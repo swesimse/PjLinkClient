@@ -1,4 +1,4 @@
-name: .NET
+name: Build, test and publish .NET library (NuGet)
 
 on:
   push:
@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Setup
     - uses: actions/checkout@v2
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
@@ -19,7 +20,20 @@ jobs:
         dotnet-version: 5.0.x
     - name: Restore dependencies
       run: dotnet restore
+      
+    # Build
     - name: Build
       run: dotnet build --no-restore
+      
+    # Test
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    
+    # Publish
+    - name: publish on version change
+      id: publish_nuget
+      uses: rohith/publish-nuget@v2
+      with:
+        # Filepath of the project to be packaged, relative to root of repository
+        PROJECT_FILE_PATH: PjlinkClient.csproj
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
